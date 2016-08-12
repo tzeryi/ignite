@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ctk</groupId>
+	<artifactId>ignote-example</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<ignite.version>1.7.0</ignite.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+		    <groupId>org.apache.ignite</groupId>
+		    <artifactId>ignite-core</artifactId>
+		    <version>${ignite.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.ignite</groupId>
+		    <artifactId>ignite-spring</artifactId>
+		    <version>${ignite.version}</version>
+		</dependency>
+
+		<!-- 如果 config 有設定  h2 datasurece 的話, 必須加入 h2 driver --> 
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>1.4.192</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
