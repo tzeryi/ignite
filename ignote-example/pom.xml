@@ -21,6 +21,11 @@
 		    <version>${ignite.version}</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.39</version>
+		</dependency>
 		<!-- 如果 config 有設定  h2 datasurece 的話, 必須加入 h2 driver --> 
 		<dependency>
 		    <groupId>com.h2database</groupId>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+    Ignite configuration with all defaults and enabled p2p deployment and enabled events.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="dataSource" name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/ignite"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="123456"></property>
+    </bean>
+
+    <bean class="org.apache.ignite.configuration.IgniteConfiguration" id="ignite.cfg">
+    	<property name="clientMode" value="true"/>
+        <property name="cacheConfiguration">
+            <list>
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="personCache"></property>
+                    <!--
+                    <property name="cacheMode" value="PARTITIONED"/>
+	            	<property name="backups" value="1"/>
+	            	-->
+                    <!-- Enable readThrough-->
+                    <property name="readThrough" value="true"></property>
+                    <property name="writeThrough" value="true"></property>
+                    <!-- Set cacheStoreFactory-->
+                    <property name="cacheStoreFactory">
+                        <!-- [S] build by tool -->
+                        <bean class="org.apache.ignite.cache.store.jdbc.CacheJdbcPojoStoreFactory">
+                        	<property name="dataSourceBean" value="dataSource"/>
+                            <property name="types">
+                                <list>
+                                    <bean class="org.apache.ignite.cache.store.jdbc.JdbcType">
+                                    	<property name="cacheName" value="personCache" />
+                                        <property name="databaseSchema" value="ignite"/>
+                                        <property name="databaseTable" value="person"/>
+                                        <property name="keyType" value="com.ctk.ignite.vo.PersonKey"/>
+                                        <property name="valueType" value="com.ctk.ignite.vo.Person"/>
+                                        <property name="keyFields">
+                                            <list>
+                                                <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+                                                    <property name="databaseFieldType">
+                                                        <util:constant static-field="java.sql.Types.INTEGER"/>
+                                                    </property>
+                                                    <property name="databaseFieldName" value="id"/>
+                                                    <property name="javaFieldType" value="int"/>
+                                                    <property name="javaFieldName" value="id"/>
+                                                </bean>
+                                            </list>
+                                        </property>
+                                        <property name="valueFields">
+                                            <list>
+                                                <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+                                                    <property name="databaseFieldType">
+                                                        <util:constant static-field="java.sql.Types.INTEGER"/>
+                                                    </property>
+                                                    <property name="databaseFieldName" value="id"/>
+                                                    <property name="javaFieldType" value="int"/>
+                                                    <property name="javaFieldName" value="id"/>
+                                                </bean>
+                                                <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+                                                    <property name="databaseFieldType">
+                                                        <util:constant static-field="java.sql.Types.VARCHAR"/>
+                                                    </property>
+                                                    <property name="databaseFieldName" value="first_name"/>
+                                                    <property name="javaFieldType" value="java.lang.String"/>
+                                                    <property name="javaFieldName" value="firstName"/>
+                                                </bean>
+                                                <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+                                                    <property name="databaseFieldType">
+                                                        <util:constant static-field="java.sql.Types.VARCHAR"/>
+                                                    </property>
+                                                    <property name="databaseFieldName" value="last_name"/>
+                                                    <property name="javaFieldType" value="java.lang.String"/>
+                                                    <property name="javaFieldName" value="lastName"/>
+                                                </bean>
+                                                <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+                                                    <property name="databaseFieldType">
+                                                        <util:constant static-field="java.sql.Types.DOUBLE"/>
+                                                    </property>
+                                                    <property name="databaseFieldName" value="salary"/>
+                                                    <property name="javaFieldType" value="double"/>
+                                                    <property name="javaFieldName" value="salary"/>
+                                                </bean>
+                                            </list>
+                                        </property>
+                                    </bean>
+                                </list>
+                            </property>
+                        </bean>
+                        <!-- [E] build by tool -->
+                    </property>
+                    <property name="queryEntities">
+                        <list>
+                            <!-- [S] build by tool -->
+                            <bean class="org.apache.ignite.cache.QueryEntity">
+                                <property name="keyType" value="com.ctk.ignite.vo.PersonKey"/>
+                                <property name="valueType" value="com.ctk.ignite.vo.Person"/>
+                                <property name="fields">
+                                    <util:map map-class="java.util.LinkedHashMap">
+                                        <entry key="id" value="java.lang.Integer"/>
+                                        <entry key="firstName" value="java.lang.String"/>
+                                        <entry key="lastName" value="java.lang.String"/>
+                                        <entry key="salary" value="java.lang.Double"/>
+                                    </util:map>
+                                </property>
+                                <property name="aliases">
+                                    <map>
+                                        <entry key="firstName" value="first_name"/>
+                                        <entry key="lastName" value="last_name"/>
+                                    </map>
+                                </property>
+                                <property name="indexes">
+                                    <list>
+                                        <bean class="org.apache.ignite.cache.QueryIndex">
+                                            <property name="name" value="PRIMARY"/>
+                                            <property name="indexType">
+                                                <util:constant static-field="org.apache.ignite.cache.QueryIndexType.SORTED"/>
+                                            </property>
+                                            <property name="fields">
+                                                <map>
+                                                    <entry key="id" value="true"/>
+                                                </map>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                            <!-- [E] build by tool -->
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="peerClassLoadingEnabled" value="true"></property>
+
+    </bean>
+</beans>
