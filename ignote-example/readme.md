@@ -1,13 +1,15 @@
-* {IGNITE_HOME}\examples\config\example-default.xml ╓╓╕ЁЁ]╘w H2 datasource
-       ╕p╙G pom.xml ╦л╜╠╗S╕Ё╔[╓J h2 driver ╙╨╦э, ╥|╣L╙k╟У╕Ф
-* Ignite ╧wЁ]╙╨ cacheMode ╛O PARTITIONED, ╛╟╓Fав╖K╣{╕║╟У╕Ф╣╡╖Т╚А cache ╓╓╙╨╦Й╝ф©Р╔╒, ╔i╔H
-    1. ╠N╣{╕║╨щ╙╨ clientMode Ё]╘w╛╟ true
-    2. ╠N╣{╕║╨щ╙╨ cacheMode Ё]╘w╛╟ REPLICATED
-    3. enable PARTITIONED ╪р╕║╙╨Ёф╔В╔\╞Ю <property name="backups" value="1"/>
-* ╖Б {IGNITE_HOME}\libs\optional ╓╓╙╨  ignite-rest-http ╫ф╩s╗Л   {IGNITE_HOME}\libs\ ╓U╜╠, 
-       ╕A╟У╕Ф   {IGNITE_HOME}\bin\ingite.{bat|sh}, ╖Y╔i╠р╔н ignite rest ╔\╞Ю
-* ╕p╙G╜n╕b server ╨щ╠р╔н datasource ╙╨╦э, ╔╡╤╥╖Б jdbc driver jar ╘Я╗Л  {IGNITE_HOME}\libs ╓U
-* ╗о╔н   {IGNITE_HOME}\bin\ignite-schema-import.{bat|sh} ╔i╔H╡ё╔м╩щ╜n╙╨ pojo class ╦Р  configuration
+* {IGNITE_HOME}\examples\config\example-default.xml Д╦╜Ф°┴Х╗╜Е╝  H2 datasource
+       Е╕┌Ф·° pom.xml Хё║И²╒Ф╡▓Ф°┴Е┼═Е┘╔ h2 driver Г └Х╘╠, Ф°┐Г└║ФЁ∙Е÷╥Х║▄
+* Ignite И═░Х╗╜Г └ cacheMode Ф≤╞ PARTITIONED, Г┌╨Д╨├И│©Е┘█Г╗▀Е╪▐Е÷╥Х║▄Г╣░Ф²÷Е╬▄ cache Д╦╜Г └ХЁ┤Ф√≥И│╨Е╓╠, Е▐╞Д╩╔
+    1. Е╟┤Г╗▀Е╪▐Г╚╞Г └ clientMode Х╗╜Е╝ Г┌╨ true
+    2. Е╟┤Г╗▀Е╪▐Г╚╞Г └ cacheMode Х╗╜Е╝ Г┌╨ REPLICATED
+    3. enable PARTITIONED Ф╗║Е╪▐Г └Е┌≥Д╩╫Е┼÷Х┐╫ <property name="backups" value="1"/>
+* Ф┼┼ {IGNITE_HOME}\libs\optional Д╦╜Г └  ignite-rest-http Х╓┤Хё╫Е┬╟   {IGNITE_HOME}\libs\ Д╦▀И²╒, 
+       Е├█Е÷╥Х║▄   {IGNITE_HOME}\bin\ingite.{bat|sh}, Е█ЁЕ▐╞Е∙÷Г■╗ ignite rest Е┼÷Х┐╫
+* Е╕┌Ф·°Х╕│Е°╗ server Г╚╞Е∙÷Г■╗ datasource Г └Х╘╠, Е©┘И═┬Ф┼┼ jdbc driver jar Ф■╬Е┬╟  {IGNITE_HOME}\libs Д╦▀
+* Д╫©Г■╗   {IGNITE_HOME}\bin\ignite-schema-import.{bat|sh} Е▐╞Д╩╔Г■╒Г■÷И°─Х╕│Г └ pojo class Х╥÷  configuration
 * set IGNITE_HOME={IGNITE_HOME}
 
   {IGNITE_HOME}\bin\ignite.{bat|sh} examples/config/example-ignite.xml
+  
+* Е╕┌Ф·°Ф°┴Г■╗ datasource Г └Х╘╠, server Г╚╞Г └ config Д╧÷Х╕│Х╗╜Е╝  datasource

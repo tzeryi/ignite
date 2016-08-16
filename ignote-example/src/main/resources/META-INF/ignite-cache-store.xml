@@ -36,7 +36,9 @@
     </bean>
 
     <bean class="org.apache.ignite.configuration.IgniteConfiguration" id="ignite.cfg">
+
     	<property name="clientMode" value="true"/>
+
         <property name="cacheConfiguration">
             <list>
                 <bean class="org.apache.ignite.configuration.CacheConfiguration">

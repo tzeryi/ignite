@@ -25,7 +25,7 @@ public class CacheJdbcPojoStoreDemo {
 			cache.loadCache(null);
 
             QueryCursor<List<?>> cursor = cache.query(new SqlFieldsQuery(
-                    "select * from Person where salary > 1000 and salary <= 300"));
+                    "select first_name from Person where salary > 1000 and salary <= 3000"));
             System.out.println(cursor.getAll());
 		}
 	}
@@ -35,7 +35,7 @@ public class CacheJdbcPojoStoreDemo {
 			IgniteCache<PersonKey, Person> cache = ignite.getOrCreateCache("personCache");
 			
             QueryCursor<List<?>> cursor = cache.query(new SqlFieldsQuery(
-                    "select * from Person where salary > 1000 and salary <= 300"));
+                    "select * from Person where salary > 1000 and salary <= 3000"));
             System.out.println(cursor.getAll());
 		}
 	}
