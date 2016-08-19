@@ -35,6 +35,13 @@
         <property name="password" value="123456"></property>
     </bean>
 
+    <bean id="dataSource1" name="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/employees"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="123456"></property>
+    </bean>
+
     <bean class="org.apache.ignite.configuration.IgniteConfiguration" id="ignite.cfg">
 
     	<property name="clientMode" value="true"/>
@@ -157,9 +164,117 @@
                         </list>
                     </property>
                 </bean>
+
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="salaryCache"></property>
+                    <!--
+                    <property name="cacheMode" value="PARTITIONED"/>
+	            	<property name="backups" value="1"/>
+	            	-->
+                    <!-- Enable readThrough-->
+                    <property name="readThrough" value="true"></property>
+                    <property name="writeThrough" value="true"></property>
+                    <!-- Set cacheStoreFactory-->
+                    <property name="cacheStoreFactory">
+                        <!-- [S] build by tool -->
+					    <bean class="org.apache.ignite.cache.store.jdbc.CacheJdbcPojoStoreFactory">
+					    	<property name="dataSourceBean" value="dataSource1"/>
+					        <property name="types">
+					            <list>
+					                <bean class="org.apache.ignite.cache.store.jdbc.JdbcType">
+					                	<property name="cacheName" value="salaryCache" />
+					                    <property name="databaseSchema" value="employees"/>
+					                    <property name="databaseTable" value="salaries"/>
+					                    <property name="keyType" value="com.ctk.vo.SalariesKey"/>
+					                    <property name="valueType" value="com.ctk.vo.Salaries"/>
+					                    <property name="keyFields">
+					                        <list>
+					                            <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+					                                <property name="databaseFieldType">
+					                                    <util:constant static-field="java.sql.Types.INTEGER"/>
+					                                </property>
+					                                <property name="databaseFieldName" value="emp_no"/>
+					                                <property name="javaFieldType" value="int"/>
+					                                <property name="javaFieldName" value="empNo"/>
+					                            </bean>
+					                            <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+					                                <property name="databaseFieldType">
+					                                    <util:constant static-field="java.sql.Types.DATE"/>
+					                                </property>
+					                                <property name="databaseFieldName" value="from_date"/>
+					                                <property name="javaFieldType" value="java.sql.Date"/>
+					                                <property name="javaFieldName" value="fromDate"/>
+					                            </bean>
+					                        </list>
+					                    </property>
+					                    <property name="valueFields">
+					                        <list>
+					                            <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+					                                <property name="databaseFieldType">
+					                                    <util:constant static-field="java.sql.Types.INTEGER"/>
+					                                </property>
+					                                <property name="databaseFieldName" value="salary"/>
+					                                <property name="javaFieldType" value="int"/>
+					                                <property name="javaFieldName" value="salary"/>
+					                            </bean>
+					                            <bean class="org.apache.ignite.cache.store.jdbc.JdbcTypeField">
+					                                <property name="databaseFieldType">
+					                                    <util:constant static-field="java.sql.Types.DATE"/>
+					                                </property>
+					                                <property name="databaseFieldName" value="to_date"/>
+					                                <property name="javaFieldType" value="java.sql.Date"/>
+					                                <property name="javaFieldName" value="toDate"/>
+					                            </bean>
+					                        </list>
+					                    </property>
+					                </bean>
+					            </list>
+					        </property>
+					    </bean>
+					</property>
+                    <property name="queryEntities">
+                        <list>
+						    <bean class="org.apache.ignite.cache.QueryEntity">
+						        <property name="keyType" value="com.ctk.vo.SalariesKey"/>
+						        <property name="valueType" value="com.ctk.vo.Salaries"/>
+						        <property name="fields">
+						            <util:map map-class="java.util.LinkedHashMap">
+						                <entry key="empNo" value="java.lang.Integer"/>
+						                <entry key="salary" value="java.lang.Integer"/>
+						                <entry key="fromDate" value="java.sql.Date"/>
+						                <entry key="toDate" value="java.sql.Date"/>
+						            </util:map>
+						        </property>
+						        <property name="aliases">
+						            <map>
+						                <entry key="empNo" value="emp_no"/>
+						                <entry key="fromDate" value="from_date"/>
+						                <entry key="toDate" value="to_date"/>
+						            </map>
+						        </property>
+						        <property name="indexes">
+						            <list>
+						                <bean class="org.apache.ignite.cache.QueryIndex">
+						                    <property name="name" value="PRIMARY"/>
+						                    <property name="indexType">
+						                        <util:constant static-field="org.apache.ignite.cache.QueryIndexType.SORTED"/>
+						                    </property>
+						                    <property name="fields">
+						                        <map>
+						                            <entry key="empNo" value="true"/>
+						                            <entry key="fromDate" value="true"/>
+						                        </map>
+						                    </property>
+						                </bean>
+						            </list>
+						        </property>
+						    </bean>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
-        <property name="peerClassLoadingEnabled" value="true"></property>
+        <property name="peerClassLoadingEnabled" value="false"></property>
 
     </bean>
 </beans>
